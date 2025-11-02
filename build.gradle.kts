@@ -1,15 +1,10 @@
 plugins {
     java
     id("maven-publish")
-    id("org.springframework.boot") version "3.3.3"
+    id("org.springframework.boot") version "3.5.7"
 }
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
-}
-
-group = "com.everage"
+group = "com.everage.eshop"
 version = "1.0.0-SNAPSHOT"
 
 repositories {
@@ -22,8 +17,25 @@ dependencies {
     implementation(platform(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES))
     annotationProcessor(platform(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES))
 
-    // Use JUnit Jupiter for testing.
-    testImplementation(libs.junit.jupiter)
+    // SPRING DEPENDENCIES
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+
+    // DB
+    runtimeOnly("org.postgresql:postgresql")
+    implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
+    implementation("io.hypersistence:hypersistence-utils-hibernate-63:${project.property("hypersistenceUtilsVersion")}")
+
+    // Utils
+    "compileOnly"("org.projectlombok:lombok")
+    "annotationProcessor"("org.projectlombok:lombok")
+    "annotationProcessor"("org.springframework.boot:spring-boot-configuration-processor")
+    implementation("org.mapstruct:mapstruct:${project.property("mapStructVersion")}")
+    annotationProcessor("org.mapstruct:mapstruct-processor:${project.property("mapStructVersion")}")
+
+    // TEST
+    "testImplementation"("org.springframework.boot:spring-boot-starter-test")
+    "testImplementation"("org.springframework.security:spring-security-test")
 
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
